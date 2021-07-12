@@ -1269,10 +1269,12 @@ int lms7nfe_set_gain(struct xtrx_fe_obj* obj,
 		break;
 
 	case XTRX_TX_PAD_GAIN:
-		if (gain > 0)
+		if (gain > 52.0)
+			gain = 52.0;
+		else if (gain < 0)
 			gain = 0;
 		actual = gain;
-		res = lms7_trf_set_pad(&dev->lms_state, -gain);
+		res = lms7_trf_set_pad(&dev->lms_state, 52.0-gain);
 		break;
 
 	default:
