@@ -282,21 +282,6 @@ std::vector<std::string> SoapyXTRX::listGains(const int direction, const size_t 
 	return gains;
 }
 
-void SoapyXTRX::setGain(const int direction, const size_t channel, const double value)
-{
-	std::unique_lock<std::recursive_mutex> lock(_dev->accessMutex);
-	xtrx_channel_t chan = to_xtrx_channels(channel);
-	SoapySDR::logf(SOAPY_SDR_FATAL /*SOAPY_SDR_DEBUG(*/, "SoapyXTRX::setGain(, %d, --, %g dB)", int(channel), value);
-
-	if (direction == SOAPY_SDR_RX)
-	{
-		double actual;
-		xtrx_set_gain(_dev->dev(), chan, XTRX_RX_LNA_GAIN, value, &actual);
-	}
-
-	else SoapySDR::Device::setGain(direction, channel, value);
-}
-
 void SoapyXTRX::setGain(const int direction, const size_t channel, const std::string &name, const double value)
 {
 	std::unique_lock<std::recursive_mutex> lock(_dev->accessMutex);
