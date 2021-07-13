@@ -1112,8 +1112,8 @@ int lms7nfe_bb_set_freq(struct xtrx_fe_obj* obj,
 		return res;
 
 	if (type == XTRX_TUNE_BB_TX) {
-		double tx_dac_freq = dev->cgen_clk / dev->txcgen_div;
-		rel_freq = freq / tx_dac_freq;
+		double tx_dac_freq = dev->txcgen_div == 0.0 ? 0.0 : dev->cgen_clk / dev->txcgen_div;
+		rel_freq = tx_dac_freq == 0.0 ? 0.0 : freq / tx_dac_freq;
 		if (rel_freq > 0.5 || rel_freq < -0.5) {
 			XTRXLLS_LOG("LMSF", XTRXLL_WARNING,
 					   "%s: NCO TX ouf of range, requested %.3f while DAC %.3f\n",
@@ -1135,8 +1135,8 @@ int lms7nfe_bb_set_freq(struct xtrx_fe_obj* obj,
 								  ch == LMS7_CH_B ? dev->tx_dsp[1].value : dev->tx_dsp[0].value);
 		}
 	} else {
-		double rx_dac_freq = dev->cgen_clk / dev->rxcgen_div;
-		rel_freq = freq / rx_dac_freq;
+		double rx_dac_freq = dev->rxcgen_div == 0.0 ? 0.0 : dev->cgen_clk / dev->rxcgen_div;
+		rel_freq = rx_dac_freq == 0.0 ? 0.0 : freq / rx_dac_freq;
 		if (rel_freq > 0.5 || rel_freq < -0.5) {
 			XTRXLLS_LOG("LMSF", XTRXLL_WARNING,
 					   "%s: NCO RX ouf of range, requested %.3f (%.3f kHz) while ADC %.3f kHz\n",
