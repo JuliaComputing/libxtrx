@@ -277,7 +277,7 @@ public:
      * Hardware Info API
      ******************************************************************/
 
-    void* getNativeDeviceHandle(void);
+    void* getNativeDeviceHandle(void) const override;
 
 private:
 	xtrx_channel_t to_xtrx_channels(const size_t channel) const;
