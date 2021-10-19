@@ -1335,3 +1335,9 @@ xtrx_channel_t SoapyXTRX::to_xtrx_channels(const size_t channel) const
 	else
 		throw std::runtime_error("SoapyXTRX: incorret number of channel provided");
 }
+
+void* SoapyXTRX::getNativeDeviceHandle()
+{
+	SoapySDR::logf(SOAPY_SDR_INFO, "Testing handle call");
+	return _dev->dev();
+}

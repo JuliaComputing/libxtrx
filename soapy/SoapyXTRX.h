@@ -273,6 +273,12 @@ public:
 
     unsigned transactSPI(const int addr, const unsigned data, const size_t numBits);
 
+    /*******************************************************************
+     * Hardware Info API
+     ******************************************************************/
+
+    void* getNativeDeviceHandle(void);
+
 private:
 	xtrx_channel_t to_xtrx_channels(const size_t channel) const;
 
