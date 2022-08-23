@@ -719,6 +719,7 @@ std::vector<std::string> SoapyXTRX::listSensors(void) const
 	sensors.push_back("clock_locked");
 	sensors.push_back("lms7_temp");
 	sensors.push_back("board_temp");
+	sensors.push_back("lms7002m_regs");
 	return sensors;
 }
 
@@ -751,6 +752,13 @@ SoapySDR::ArgInfo SoapyXTRX::getSensorInfo(const std::string &name) const
 		info.units = "C";
 		info.description = "The temperature of the XTRX board in degrees C.";
 	}
+	else if (name == "lms7002m_regs")
+	{
+		info.key = "lms7002m_regs";
+		info.name = "LMS7002M register dump";
+		info.type = SoapySDR::ArgInfo::STRING;
+		info.description = "A register dump for the LMS7002M RF IC.";
+	}
 	return info;
 }
 
@@ -774,6 +782,15 @@ std::string SoapyXTRX::readSensor(const std::string &name) const
 			throw std::runtime_error("SoapyXTRX::readSensor("+name+") error: " + std::to_string(res));
 
 		return std::to_string(val / 256.0);
+	}
+	else if (name == "lms7002m_regs")
+	{
+		char* buffer = NULL;
+		size_t bufferSize = 0;
+		FILE* stream = open_memstream(&buffer, &bufferSize);
+		xtrx_dump_regs(_dev->dev(), stream);
+		fclose(stream);
+		return std::string(buffer);
 	}
 
 	throw std::runtime_error("SoapyXTRX::readSensor("+name+") - unknown sensor name");

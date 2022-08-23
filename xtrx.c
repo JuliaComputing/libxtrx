@@ -2351,3 +2351,7 @@ void xtrx_log_setlevel(int sevirity, const char sybsystem[4])
 	xtrxll_set_loglevel(sevirity);
 }
 
+
+XTRX_API int xtrx_dump_regs(struct xtrx_dev* dev, FILE* stream) {
+	xtrxll_dump_regs(dev->lldev, stream);
+}

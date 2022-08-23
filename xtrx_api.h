@@ -24,6 +24,7 @@
 #include <stddef.h>
 #include <stdarg.h>
 #include <time.h>
+#include <stdio.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -609,6 +610,8 @@ XTRX_API int xtrx_val_set(struct xtrx_dev* dev, xtrx_direction_t dir,
 
 XTRX_API int xtrx_val_get(struct xtrx_dev* dev, xtrx_direction_t dir,
 						  xtrx_channel_t chan, xtrx_val_t type, uint64_t* val);
+
+XTRX_API int xtrx_dump_regs(struct xtrx_dev* dev, FILE* stream);
 
 
 /* Misc & Debug functions */
